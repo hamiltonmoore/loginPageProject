@@ -1,1 +1,1 @@
-modeule.exports = [];
+module.exports = [];
