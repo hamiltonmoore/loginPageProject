@@ -32,7 +32,42 @@ app.get("/signup", (req, res) => {
     console.log("only when signup is pressed");
     res.render("signup");
 });
+//req.body accesses body-parser. it's requesting the body to be added to the stream of info
+app.post("/signup", (req, res) => {  //theory: this portion takes information from form, redirects to login page.
+    let newUser = req.body;   //it's not redirecting to login page yet
+    // check if the username is already in use.
+    // check password
+    // console.log("newUser: ", newUser);
+    users.push(newUser);
+    console.log("users: ", users);
+    res.redirect("/login"); //does this render the login page OR does the below do that?
+});
 
+app.get("/login", (req, res) => {
+    res.render("login");
+});  ///this should render the login page, or does the above redirect do that?
+
+app.post("/login", (req, res) => {
+    let reqUsername = req.body.username;
+    let reqPassword = req.body.password;
+
+    let foundUser = users.find(user => user.username === reqUsername);
+    if (!foundUser) {
+        return res.render("login", { errors: ["User not found"] });
+    }
+
+    if (foundUser.password === reqPassword) {
+        delete foundUser.password;
+        req.session.user = foundUser;
+        res.redirect("/");
+    } else {
+        return res.render("login", { errors: ["Password does not match."] });
+    }
+});
+
+app.get("/profile", checkAuth, (req, res) => {
+    res.render("profile", { user: req.session.user });
+});
 
 app.listen(port, () => {
     console.log(`you are on port ${port}`);
