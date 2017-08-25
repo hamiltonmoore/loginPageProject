@@ -5,3 +5,7 @@ body {
 nav {
     width: 100%;
 }
+
+.container {
+    text-align: center;
+}

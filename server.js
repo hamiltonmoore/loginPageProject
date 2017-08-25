@@ -32,15 +32,12 @@ app.get("/signup", (req, res) => {
     console.log("only when signup is pressed");
     res.render("signup");
 });
-//req.body accesses body-parser. it's requesting the body to be added to the stream of info
+
 app.post("/signup", (req, res) => {  //theory: this portion takes information from form, redirects to login page.
-    let newUser = req.body;   //it's not redirecting to login page yet
-    // check if the username is already in use.
-    // check password
-    // console.log("newUser: ", newUser);
+    let newUser = req.body;
     users.push(newUser);
     console.log("users: ", users);
-    res.redirect("/login"); //does this render the login page OR does the below do that?
+    res.redirect("/login");
 });
 
 app.get("/login", (req, res) => {
