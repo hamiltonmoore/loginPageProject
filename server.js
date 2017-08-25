@@ -53,7 +53,7 @@ app.post("/login", (req, res) => {
 
     let foundUser = users.find(user => user.username === reqUsername);
     if (!foundUser) {
-        return res.render("login", { errors: ["User not found"] });
+        return res.render("signup", { errors: ["User not found"] });
     }
 
     if (foundUser.password === reqPassword) {
